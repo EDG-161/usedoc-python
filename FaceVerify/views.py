@@ -25,15 +25,18 @@ from django.core.files.base import ContentFile
 # Create your views here. 
 def upload_image_view(request):
 	message = "No se pudo"
-	if request.method == 'POST':
-		img_base64 = request.POST["img"]
-		name = request.POST["img_name"] + ".png"
-		data = ContentFile(b64decode(img_base64), name)
-		newImage = AlbumImage()
-		newImage.image = data
-		newImage.album = "as"
-		newImage.save() 
-		message = "Image uploaded succesfully!"
+	try:
+		if request.method == 'POST':
+			img_base64 = request.POST["img"]
+			name = request.POST["img_name"] + ".png"
+			data = ContentFile(b64decode(img_base64), name)
+			newImage = AlbumImage()
+			newImage.image = data
+			newImage.album = name
+			newImage.save() 
+			message = "Image uploaded succesfully!"
+	except Error:
+		message = Error
 	return HttpResponse(message) 
 
 def connection(request):
