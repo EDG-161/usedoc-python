@@ -44,3 +44,6 @@ def upload_image_view(request):
 			form = UploadImageForm()
 
 	return HttpResponse(message) 
+
+def connection(request):
+	return HttpResponse("Se conecto")

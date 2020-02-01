@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 from FaceVerify.views import *
 
 urlpatterns = [
-	path('image_upload', upload_image_view, name = 'upload_image_view'), 
+	path('image_upload', upload_image_view, name = 'upload_image_view'),
+    path('/', connection, name = 'connection'), 
 ]
 
 if settings.DEBUG:
