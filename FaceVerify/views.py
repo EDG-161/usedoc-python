@@ -15,6 +15,7 @@ from azure.cognitiveservices.vision.face.models import TrainingStatusType, Perso
 
 from django.http import HttpResponse 
 from django.shortcuts import render, redirect 
+from django.conf import settings
 from .forms import UploadImageForm
 from .models import AlbumImage
 
@@ -34,7 +35,7 @@ def upload_image_view(request):
 			newImage.image = data
 			newImage.album = name
 			newImage.save() 
-			message = "Image uploaded succesfully!"
+			message = "Image uploaded succesfully!     " + settings.MEDIA_ROOT
 	except Error:
 		message = Error
 	return HttpResponse(message) 
