@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7z6-0=4+e3+e%3w#s0bl@lz3vyee-&wkk_9k8$b3(b6wi7q(1)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','verify.usedoc.ml','157.245.161.67','verify.usedoc.ml']
 

@@ -24,7 +24,3 @@ urlpatterns = [
     path('verify_session', verify_session, name = 'verify_session'),
     path('', connection, name = 'connection'), 
 ]
-
-if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)

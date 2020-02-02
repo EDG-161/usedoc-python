@@ -37,8 +37,8 @@ def upload_image_view(request):
 			newImage.album = name
 			newImage.save() 
 			message = "Image uploaded succesfully!" 
-	except Error:
-		message = Error
+	except:
+		message = "Error"
 	return HttpResponse(message) 
 
 def connection(request):
@@ -49,8 +49,8 @@ def verify_session(request):
 		user_key = request.POST["user_key"]
 		id = DBconnection.vef_session(user_key)
 		if id>0:
-			return "verify_session_ok"
+			return HttpResponse("verify_session_ok")
 		else:
-			return "error"
-	except Error:
-		return "error"
+			return HttpResponse("error")
+	except:
+		return HttpResponse("error")
