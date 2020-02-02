@@ -10,6 +10,7 @@ def login(email,password):
     cursor = db.cursor()
     sql = "SELECT * FROM musuarios where email_usr='{}' ".format(Cipher.encrypt(email))
     sql = sql + "&& pass_usr='{}' limit 1".format(Cipher.encrypt(password))
+    print(sql)
     cursor.execute(sql)
     result = cursor.fetchall()
 
