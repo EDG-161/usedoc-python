@@ -18,7 +18,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .forms import UploadImageForm
 from .models import AlbumImage
-from .DBconnection import *
+from FaceVerify import DBconnection
 
 from base64 import b64decode
 from django.core.files.base import ContentFile
