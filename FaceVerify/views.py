@@ -18,6 +18,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .forms import UploadImageForm
 from .models import AlbumImage
+from .DBconnection import *
 
 from base64 import b64decode
 from django.core.files.base import ContentFile
@@ -35,10 +36,21 @@ def upload_image_view(request):
 			newImage.image = data
 			newImage.album = name
 			newImage.save() 
-			message = "Image uploaded succesfully!     " + settings.MEDIA_ROOT
+			message = "Image uploaded succesfully!" 
 	except Error:
 		message = Error
 	return HttpResponse(message) 
 
 def connection(request):
 	return HttpResponse("Se conecto")
+
+def verify_session(request):
+	try:
+		user_key = request.POST["user_key"]
+		id = DBconnection.vef_session(user_key)
+		if id>0:
+			return "verify_session_ok"
+		else:
+			return "error"
+	except Error:
+		return "error"
