@@ -12,7 +12,7 @@ def login(email,password):
     cpassword = Cipher.encrypt(password)
     print(type(cemail))
     print(type(cpassword))
-    sql = "SELECT * FROM musuarios where email_usr='"+cemail)+"'"
+    sql = "SELECT * FROM musuarios where email_usr='"+cemail+"'"
     sql = sql + "&& pass_usr='"+cpassword+"' limit 1"
     print(sql)
     cursor.execute(sql)
