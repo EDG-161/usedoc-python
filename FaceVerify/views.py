@@ -56,10 +56,9 @@ def verify_session(request):
 		return HttpResponse("error")
 
 def login(request):
-	#try:
-	print(request.POST)
-	email = request.POST["email"]
-	password = request.POST["pass"]
-	return HttpResponse(DBconnection.login(email,password))
-	#except:
-	#	return HttpResponse("Error")
+	try:
+		email = request.POST["email"]
+		password = request.POST["pass"]
+		return HttpResponse(DBconnection.login(email,password))
+	except:
+		return HttpResponse("Error")

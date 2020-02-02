@@ -2,31 +2,39 @@ import pymysql
 import json
 from Usedoc import Cipher
 
+
 def vefUser(email,password):
     pass
 
 def login(email,password):
     db = pymysql.connect("gautabases.ga","usedoc_user","Use_pass223856220","usedoc")
     cursor = db.cursor()
-    cemail = Cipher.encrypt(email).decode("utf-8") 
-    cpassword = Cipher.encrypt(password).decode("utf-8") 
-    print(type(cemail))
-    print(type(cpassword))
+    cemail = Cipher.encrypt(email)
+    cpassword = Cipher.encrypt(password)
     sql = "SELECT * FROM musuarios where email_usr='"+cemail+"'"
     sql = sql + "&& pass_usr='"+cpassword+"' limit 1"
-    print(sql)
     cursor.execute(sql)
     result = cursor.fetchall()
-
-    user = {
-        "id_usr":result[0][0],
-        "email_usr":result[0][1],
-        "reg_usr":Cipher.decrypt(result[0][3]),
-        "id_tid":result[0][4],
-        "img_usr":result[0][5],
-        "key_usr":result[0][6],
-    }
+    if len(result)>0:
+        user = {
+            "id_usr":result[0][0],
+            "email_usr":result[0][1],
+            "reg_usr":Cipher.decrypt(result[0][3]),
+            "id_tid":result[0][4],
+            "img_usr":Cipher.decrypt(result[0][5]),
+            "key_usr":result[0][6],
+        }
+    else:
+        user = {
+            "id_usr":0,
+            "email_usr":"",
+            "reg_usr":"",
+            "id_tid":0,
+            "img_usr":"",
+            "key_usr":"",
+        }
     db.close()
+
     return json.dumps(user)
 
 
