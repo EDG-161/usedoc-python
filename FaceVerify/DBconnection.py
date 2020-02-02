@@ -16,6 +16,14 @@ def login(email,password):
     cursor.execute(sql)
     result = cursor.fetchall()
     if len(result)>0:
+        tabla = ""
+        if result[0][4] == 1:
+            tabla = "nom_med,appat_med,apmat_med,ced_med FROM mdoctores"
+        else:
+            tabla = "nom_pac,appat_pac,apmat_pac,sta_pac FROM mpacientes"
+        sql = "SELECT "+tabla+" where id_usr={}".format(result[0][0])+" limit 1"
+        cursor.execute(sql)
+        second = cursor.fetchall()
         user = {
             "id_usr":result[0][0],
             "email_usr":result[0][1],
@@ -23,7 +31,12 @@ def login(email,password):
             "id_tid":result[0][4],
             "img_usr":Cipher.decrypt(result[0][5]),
             "key_usr":result[0][6],
+            "name_usr":Cipher.decrypt(second[0][0]),
+            "appat_usr":Cipher.decrypt(second[0][1]),
+            "apmat_usr":Cipher.decrypt(second[0][2]),
+            "dat_usr": "{}".format(second[0][3]),
         }
+        
     else:
         user = {
             "id_usr":0,

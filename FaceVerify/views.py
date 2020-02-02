@@ -60,5 +60,5 @@ def login(request):
 		email = request.POST["email"]
 		password = request.POST["pass"]
 		return HttpResponse(DBconnection.login(email,password))
-	except:
-		return HttpResponse("Error")
+	except Exception as E:
+		return HttpResponse(E.args)
