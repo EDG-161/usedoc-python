@@ -8,8 +8,8 @@ def vefUser(email,password):
 def login(email,password):
     db = pymysql.connect("gautabases.ga","usedoc_user","Use_pass223856220","usedoc")
     cursor = db.cursor()
-    cemail = Cipher.encrypt(email)
-    cpassword = Cipher.encrypt(password)
+    cemail = Cipher.encrypt(email)[0:]
+    cpassword = Cipher.encrypt(password)[0:]
     print (cemail)
     print(cpassword)
     sql = "SELECT * FROM musuarios where email_usr={} ".format(cemail)
