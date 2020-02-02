@@ -21,6 +21,7 @@ from FaceVerify.views import *
 
 urlpatterns = [
 	path('image_upload', upload_image_view, name = 'upload_image_view'),
+    path('login', login, name = 'login'),
     path('verify_session', verify_session, name = 'verify_session'),
     path('', connection, name = 'connection'), 
 ]

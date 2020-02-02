@@ -54,3 +54,11 @@ def verify_session(request):
 			return HttpResponse("error")
 	except:
 		return HttpResponse("error")
+
+def login(request):
+	try:
+		email = request.POST['email']
+		password = request.POST['pass']
+		return HttpResponse(DBconnection.login(email,password))
+	except expression as identifier:
+		return HttpResponse("Error")
