@@ -57,6 +57,7 @@ def verify_session(request):
 
 def login(request):
 	#try:
+	print(request.POST)
 	email = request.POST["email"]
 	password = request.POST["pass"]
 	return HttpResponse(DBconnection.login(email,password))
