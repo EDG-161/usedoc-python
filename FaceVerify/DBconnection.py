@@ -10,8 +10,8 @@ def login(email,password):
     cursor = db.cursor()
     cemail = Cipher.encrypt(email)
     cpassword = Cipher.encrypt(password)
-    print (cemail)
-    print(cpassword)
+    print(type(cemail))
+    print(type(cpassword))
     sql = "SELECT * FROM musuarios where email_usr='"+cemail)+"'"
     sql = sql + "&& pass_usr='"+cpassword+"' limit 1"
     print(sql)
