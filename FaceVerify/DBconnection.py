@@ -10,22 +10,18 @@ def login(email,password):
     cursor = db.cursor()
     sql = "SELECT * FROM musuarios where email_usr='{}' && pass_usr='{}' limit 1".format(Cipher.encrypt(email),Cipher.encrypt(password))
     cursor.execute(sql)
-    try:
-        result = cursor.fetchall()
+    result = cursor.fetchall()
 
-        user = {
-            "id_usr":result[0][0],
-            "email_usr":result[0][1],
-            "reg_usr":Cipher.decrypt(result[0][3]),
-            "id_tid":result[0][4],
-            "img_usr":result[0][5],
-            "key_usr":result[0][6],
-        }
-        db.close()
-        return json.dumps(user)
-    except:
-        db.close()
-        return "Error"
+    user = {
+        "id_usr":result[0][0],
+        "email_usr":result[0][1],
+        "reg_usr":Cipher.decrypt(result[0][3]),
+        "id_tid":result[0][4],
+        "img_usr":result[0][5],
+        "key_usr":result[0][6],
+    }
+    db.close()
+    return json.dumps(user)
 
 
 def vef_session(key):
