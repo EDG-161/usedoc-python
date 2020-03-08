@@ -50,6 +50,22 @@ def login(email,password):
 
     return json.dumps(user)
 
+def getImageServer(id_usr):
+    db = pymysql.connect("gautabases.ga","usedoc_user","Use_pass223856220","usedoc")
+    cursor = db.cursor()
+    sql = "SELECT * FROM musuarios where id_usr="+id_usr+" limit 1"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    if len(result)>0:
+        cursor.execute(sql)
+        second = cursor.fetchall()
+        user = Cipher.decrypt(result[0][5])
+        
+    else:
+        user = False
+    db.close()
+
+    return user
 
 def vef_session(key):
     db = pymysql.connect("gautabases.ga","usedoc_user","Use_pass223856220","usedoc")

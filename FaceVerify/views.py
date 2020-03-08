@@ -30,6 +30,7 @@ def upload_image_view(request):
 	try:
 		if request.method == 'POST':
 			img_base64 = request.POST["img"]
+			id_usr = request.POST["id_usr"]
 			name = request.POST["img_name"] + ".png"
 			data = ContentFile(b64decode(img_base64), name)
 			newImage = AlbumImage()
@@ -37,6 +38,8 @@ def upload_image_view(request):
 			newImage.album = name
 			newImage.save() 
 			message = "Image uploaded succesfully!" 
+			image_server = "https://portal.usedoc.ml/images/profiles/{}".format(DBconnection.getImageServer(id_usr))
+			
 	except:
 		message = "Error"
 	return HttpResponse(message) 
