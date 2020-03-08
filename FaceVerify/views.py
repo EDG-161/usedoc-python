@@ -37,7 +37,7 @@ def upload_image_view(request):
 			newImage.image = data
 			newImage.album = name
 			newImage.save() 
-			message = "Image uploaded succesfully!" + settings.MEDIA_URL 
+			message = "Image uploadedasdasdasdasd succesfully!" + settings.MEDIA_URL 
 			image_server = "https://portal.usedoc.ml/images/profiles/{}".format(DBconnection.getImageServer(id_usr))
 
 	except:
