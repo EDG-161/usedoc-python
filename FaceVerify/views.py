@@ -52,7 +52,7 @@ def upload_image_view(request):
 			newImage.image = data
 			if os.path.isfile('static/images/'+name):
 				print('static/images/'+name)
-       			os.remove('static/images/' + name)
+				os.remove('static/images/' + name)
 			newImage.album = name
 			newImage.save() 
 			message = "Image uploadedasdasdasdasd succesfully!"
