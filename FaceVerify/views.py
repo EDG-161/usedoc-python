@@ -57,22 +57,22 @@ def upload_image_view(request):
 		message = "Image uploadedasdasdasdasd succesfully!"
 		image_send = "https://verify.usedoc.ml/static/images/{}".format(newImage.album)
 	for user in users.find({'userType':"Paciente"}):
-		print(user['imageRoute'])
-		userRoute = 'http://api.usedoc.ml/{}'.format(user['imageRoute'])
-		if DBconnection.vefUser(userRoute,image_send):
-			responseUser ={
-				'_id':str(user['_id']),
-				'registerDate':str(user['registerDate']),
-				'name': Cipher.decrypt(user['name']),
-				'lastName':user['lastName'],
-				'email':Cipher.decrypt(user['email']),
-				'userType':user['userType'],
-				'data': user['data'],
-				'imageRoute': user['imageRoute']
-			}
-			if os.path.isfile('static/static/images/'+name):
-				os.remove('static/static/images/' + name)
-			return HttpResponse(json.dumps(responseUser))
+		if user['imageRoute'] is not None:
+			userRoute = 'http://api.usedoc.ml/{}'.format(user['imageRoute'])
+			if DBconnection.vefUser(userRoute,image_send):
+				responseUser ={
+					'_id':str(user['_id']),
+					'registerDate':str(user['registerDate']),
+					'name': Cipher.decrypt(user['name']),
+					'lastName':user['lastName'],
+					'email':Cipher.decrypt(user['email']),
+					'userType':user['userType'],
+					'data': user['data'],
+					'imageRoute': user['imageRoute']
+				}
+				if os.path.isfile('static/static/images/'+name):
+					os.remove('static/static/images/' + name)
+				return HttpResponse(json.dumps(responseUser))
 		
 	return HttpResponse('No se ha encontrado paciente')
 	return HttpResponse(message) 
