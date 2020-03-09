@@ -44,7 +44,7 @@ def upload_image_view(request):
 		if request.method == 'POST':
 			img_base64 = request.POST["img"]
 			#id_usr = request.POST["id_usr"]
-			name = request.POST["img_name"] + ".png"
+			name = request.POST["img_name"] + ".jpg"
 			data = ContentFile(b64decode(img_base64), name)
 			newImage = AlbumImage()
 			newImage.image = data
