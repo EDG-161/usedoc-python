@@ -53,7 +53,6 @@ def vefUser(user,upload):
     detected_faces_ids.append(detected_faces[0].face_id)
 
     verify_result_same = face_client.face.verify_face_to_face(source_image1_id, detected_faces_ids[0])
-    deleteFace(source_image1_id)
     return verify_result_same.is_identical
 
 
