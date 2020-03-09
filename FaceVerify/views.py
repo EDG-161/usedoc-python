@@ -72,7 +72,7 @@ def upload_image_view(request):
 					'data': user['data'],
 					'imageRoute': user['imageRoute']
 				}
-				return HttpResponse(JSONEncoder.encode(user))
+				return HttpResponse(JSONEncoder().encode(responseUser))
 			
 		return HttpResponse('No se ha encontrado paciente')
 	except Exception as e:
