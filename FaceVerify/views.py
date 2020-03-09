@@ -39,46 +39,42 @@ def mongo(request):
 # Create your views here. 
 def upload_image_view(request):
 	message = "No se pudo"
-	try:
 
-		client = MongoClient("mongodb+srv://UseDoc_userDB:UsedocPass_223856220@cluster0-wyexi.mongodb.net/test?retryWrites=true&w=majority")
-		db = client.test
-		users = db['users']
-		if request.method == 'POST':
-			img_base64 = request.POST["img"]
-			#id_usr = request.POST["id_usr"]
-			name = request.POST["img_name"] + ".jpg"
+	client = MongoClient("mongodb+srv://UseDoc_userDB:UsedocPass_223856220@cluster0-wyexi.mongodb.net/test?retryWrites=true&w=majority")
+	db = client.test
+	users = db['users']
+	if request.method == 'POST':
+		img_base64 = request.POST["img"]
+		#id_usr = request.POST["id_usr"]
+		name = request.POST["img_name"] + ".jpg"
+		if os.path.isfile('static/static/images/'+name):
+			os.remove('static/static/images/' + name)
+		data = ContentFile(b64decode(img_base64), name)
+		newImage = AlbumImage()
+		newImage.image = data
+		newImage.album = name
+		newImage.save() 
+		message = "Image uploadedasdasdasdasd succesfully!"
+		image_send = "https://verify.usedoc.ml/static/images/{}".format(newImage.album)
+	for user in users.find({'userType':"Paciente"}):
+		print(users.find({'userType':"Paciente"}))
+		userRoute = 'http://157.245.161.67:3001/{}'.format(user['imageRoute'])
+		if DBconnection.vefUser(userRoute,image_send):
+			responseUser ={
+				'_id':str(user['_id']),
+				'registerDate':str(user['registerDate']),
+				'name': Cipher.decrypt(user['name']),
+				'lastName':user['lastName'],
+				'email':Cipher.decrypt(user['email']),
+				'userType':user['userType'],
+				'data': user['data'],
+				'imageRoute': user['imageRoute']
+			}
 			if os.path.isfile('static/static/images/'+name):
 				os.remove('static/static/images/' + name)
-			data = ContentFile(b64decode(img_base64), name)
-			newImage = AlbumImage()
-			newImage.image = data
-			newImage.album = name
-			newImage.save() 
-			message = "Image uploadedasdasdasdasd succesfully!"
-			image_send = "https://verify.usedoc.ml/static/images/{}".format(newImage.album)
-		for user in users.find({'userType':"Paciente"}):
-			print(users.find({'userType':"Paciente"}))
-			userRoute = 'http://157.245.161.67:3001/{}'.format(user['imageRoute'])
-			if DBconnection.vefUser(userRoute,image_send):
-				responseUser ={
-					'_id':str(user['_id']),
-					'registerDate':str(user['registerDate']),
-					'name': Cipher.decrypt(user['name']),
-					'lastName':user['lastName'],
-					'email':Cipher.decrypt(user['email']),
-					'userType':user['userType'],
-					'data': user['data'],
-					'imageRoute': user['imageRoute']
-				}
-				if os.path.isfile('static/static/images/'+name):
-					os.remove('static/static/images/' + name)
-				return HttpResponse(json.dumps(responseUser))
-			
-		return HttpResponse('No se ha encontrado paciente')
-	except Exception as e:
-		print(e)
-		message = "Error  "
+			return HttpResponse(json.dumps(responseUser))
+		
+	return HttpResponse('No se ha encontrado paciente')
 	return HttpResponse(message) 
 
 def connection(request):
