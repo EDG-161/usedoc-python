@@ -57,7 +57,7 @@ def upload_image_view(request):
 		message = "Image uploadedasdasdasdasd succesfully!"
 		image_send = "https://verify.usedoc.ml/static/images/{}".format(newImage.album)
 	for user in users.find({'userType':"Paciente"}):
-		if user['imageRoute'] is not None:
+		try:
 			userRoute = 'http://api.usedoc.ml/{}'.format(user['imageRoute'])
 			if DBconnection.vefUser(userRoute,image_send):
 				responseUser ={
@@ -73,7 +73,8 @@ def upload_image_view(request):
 				if os.path.isfile('static/static/images/'+name):
 					os.remove('static/static/images/' + name)
 				return HttpResponse(json.dumps(responseUser))
-		
+		except: 
+			pass
 	return HttpResponse('No se ha encontrado paciente')
 	return HttpResponse(message) 
 
