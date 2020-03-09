@@ -4,8 +4,7 @@ import os
 
 
 class OverwriteStorage(FileSystemStorage):
-    @staticmethod
-    def get_available_name(name):
+    def get_available_name(self,name):
         """Returns a filename that's free on the target storage system, and
         available for new content to be written to.
 

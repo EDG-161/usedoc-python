@@ -49,7 +49,7 @@ def upload_image_view(request):
 			data = ContentFile(b64decode(img_base64), name)
 			newImage = AlbumImage()
 			newImage.image = data
-			newImage.album = OverwriteStorage.get_available_name(name)
+			newImage.album = OverwriteStorage.get_available_name(OverwriteStorage,name)
 			newImage.save() 
 			message = "Image uploadedasdasdasdasd succesfully!"
 			image_send = "https://verify.usedoc.ml/static/images/{}".format(newImage.album)
