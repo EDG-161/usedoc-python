@@ -51,7 +51,7 @@ def upload_image_view(request):
 			newImage.album = name
 			newImage.save() 
 			message = "Image uploadedasdasdasdasd succesfully!"
-			image_send = "https://verify.usedoc.ml/static/images/{}".format(name)
+			image_send = "https://verify.usedoc.ml/static/images/{}".format(newImage.album)
 		for user in users.find({'userType':"Paciente"}):
 			userRoute = 'http://157.245.161.67:3001/{}'.format(user['imageRoute'])
 			if DBconnection.vefUser(userRoute,image_send):
