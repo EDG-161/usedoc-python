@@ -63,7 +63,7 @@ def upload_image_view(request):
 			userRoute = 'http://157.245.161.67:3001/{}'.format(user['imageRoute'])
 			if DBconnection.vefUser(userRoute,image_send):
 				responseUser ={
-					'_id':user['_id'],
+					'_id':str(user['_id']),
 					'registerDate':user['registerDate'],
 					'name':user['name'],
 					'lastName':user['lastName'],
@@ -72,7 +72,7 @@ def upload_image_view(request):
 					'data': user['data'],
 					'imageRoute': user['imageRoute']
 				}
-				return HttpResponse(JSONEncoder().encode(responseUser))
+				return HttpResponse(json.dumps(responseUser))
 			
 		return HttpResponse('No se ha encontrado paciente')
 	except Exception as e:
