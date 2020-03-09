@@ -16,7 +16,26 @@ from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person, SnapshotObjectType, OperationStatusType
 
+import http.client, urllib.request, urllib.parse, urllib.error, base64
 
+def deleteFace(id_face):
+    headers = {
+        # Request headers
+        'Ocp-Apim-Subscription-Key': 'b44fab4424424f399c32ca79326182f2',
+    }
+
+    params = urllib.parse.urlencode({
+    })
+
+    try:
+        conn = http.client.HTTPSConnection('westus.api.cognitive.microsoft.com')
+        conn.request("DELETE", "/face/v1.0/facelists/{id_face}/persistedFaces/{persistedFaceId}?%s" % params, "{body}", headers)
+        response = conn.getresponse()
+        data = response.read()
+        print(data)
+        conn.close()
+    except Exception as e:
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 def vefUser(user,upload):
     KEY = 'b44fab4424424f399c32ca79326182f2'
@@ -34,6 +53,7 @@ def vefUser(user,upload):
     detected_faces_ids.append(detected_faces[0].face_id)
 
     verify_result_same = face_client.face.verify_face_to_face(source_image1_id, detected_faces_ids[0])
+    deleteFace(source_image1_id)
     return verify_result_same.is_identical
 
 
