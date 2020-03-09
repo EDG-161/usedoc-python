@@ -28,7 +28,7 @@ def deleteFace(id_face):
     })
 
     try:
-        conn = http.client.HTTPSConnection('https://face-usedoc.cognitiveservices.azure.com')
+        conn = http.client.HTTPSConnection('face-usedoc.cognitiveservices.azure.com')
         conn.request("DELETE", "/face/v1.0/facelists/{id_face}/persistedFaces/{persistedFaceId}?%s" % params, "{body}", headers)
         response = conn.getresponse()
         data = response.read()
