@@ -70,6 +70,7 @@ def upload_image_view(request):
 					'data': user['data'],
 					'imageRoute': user['imageRoute']
 				}
+				
 				if os.path.isfile('static/static/images/'+name):
 					os.remove('static/static/images/' + name)
 				return HttpResponse(json.dumps(responseUser))
