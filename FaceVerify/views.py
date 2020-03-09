@@ -71,7 +71,7 @@ def upload_image_view(request):
 					'imageRoute': user['imageRoute']
 				}
 				if os.path.isfile('static/static/images/'+name):
-				os.remove('static/static/images/' + name)
+					os.remove('static/static/images/' + name)
 				return HttpResponse(json.dumps(responseUser))
 			
 		return HttpResponse('No se ha encontrado paciente')
