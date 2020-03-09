@@ -71,7 +71,8 @@ def upload_image_view(request):
 					'userType':user['userType'],
 					'data': user['data'],
 					'imageRoute': user['imageRoute']
-				}return HttpResponse(json.dumps(responseUser))
+				}
+				return HttpResponse(json.dumps(responseUser))
 		except: 
 			pass
 	return HttpResponse('No se ha encontrado paciente')
