@@ -50,8 +50,9 @@ def upload_image_view(request):
 			data = ContentFile(b64decode(img_base64), name)
 			newImage = AlbumImage()
 			newImage.image = data
-			if FileSystemStorage.exists(name):
-				os.remove(name)
+			if os.path.isfile('static/images/'+name):
+				print('static/images/'+name)
+       			os.remove('static/images/' + name)
 			newImage.album = name
 			newImage.save() 
 			message = "Image uploadedasdasdasdasd succesfully!"
