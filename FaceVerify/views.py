@@ -12,22 +12,35 @@ from PIL import Image, ImageDraw
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person, SnapshotObjectType, OperationStatusType
-
+import json
 from django.http import HttpResponse 
 from django.shortcuts import render, redirect 
 from django.conf import settings
 from .forms import UploadImageForm
 from .models import AlbumImage
 from FaceVerify import DBconnection
-
+from pymongo import MongoClient
 from base64 import b64decode
 from django.core.files.base import ContentFile
-  
+
+def mongo(request):
+	client = MongoClient("mongodb+srv://UseDoc_userDB:UsedocPass_223856220@cluster0-wyexi.mongodb.net/test?retryWrites=true&w=majority")
+	db = client.test
+	users = db['users']
+
+	for user in users.find({'userType':"Paciente"}):
+		print(user['imageRoute'])
+
+	return HttpResponse("Parece que funciona ")
 
 # Create your views here. 
 def upload_image_view(request):
 	message = "No se pudo"
 	try:
+
+		client = MongoClient("mongodb+srv://UseDoc_userDB:UsedocPass_223856220@cluster0-wyexi.mongodb.net/test?retryWrites=true&w=majority")
+		db = client.test
+		users = db['users']
 		if request.method == 'POST':
 			img_base64 = request.POST["img"]
 			id_usr = request.POST["id_usr"]
@@ -37,11 +50,16 @@ def upload_image_view(request):
 			newImage.image = data
 			newImage.album = name
 			newImage.save() 
-			message = "Image uploadedasdasdasdasd succesfully!" + settings.MEDIA_URL 
-			image_server = "https://portal.usedoc.ml/images/profiles/{}".format(DBconnection.getImageServer(id_usr))
-
-	except:
-		message = "Error"
+			message = "Image uploadedasdasdasdasd succesfully!"
+			image_send = "https://verify.usedoc.ml/static/images/{}".format(name)
+		for user in users.find({'userType':"Paciente"}):
+			userRoute = 'http://157.245.161.67:3001/{}'.format(user['imageRoute'])
+			if DBconnection.vefUser(userRoute,name):
+				return HttpResponse(json.dumps(user))
+			
+		return HttpResponse('No se ha encontrado paciente')
+	except e:
+		message = "Error  " + e
 	return HttpResponse(message) 
 
 def connection(request):

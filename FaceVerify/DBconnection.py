@@ -1,10 +1,38 @@
 import pymysql
 import json
 from Usedoc import Cipher
+import asyncio
+import io
+import glob
+import os
+import sys
+import time
+import uuid
+import requests
+from urllib.parse import urlparse
+from io import BytesIO
+from PIL import Image, ImageDraw
+from azure.cognitiveservices.vision.face import FaceClient
+from msrest.authentication import CognitiveServicesCredentials
+from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person, SnapshotObjectType, OperationStatusType
 
 
-def vefUser(email,password):
-    pass
+
+def vefUser(user,upload):
+    KEY = 'b44fab4424424f399c32ca79326182f2'
+    ENDPOINT = 'https://face-usedoc.cognitiveservices.azure.com/'
+    face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
+    source_image_file_name1 = user
+    target_image_file_names = upload
+    detected_faces1 = face_client.face.detect_with_url(source_image_file_name1)
+    source_image1_id = detected_faces1[0].face_id
+    detected_faces_ids = []
+    detected_faces = face_client.face.detect_with_url(target_image_file_names)
+    detected_faces_ids.append(detected_faces[0].face_id)
+
+    verify_result_same = face_client.face.verify_face_to_face(source_image1_id, detected_faces_ids[0])
+    return verify_result_same.is_identical
+
 
 def login(email,password):
     db = pymysql.connect("gautabases.ga","usedoc_user","Use_pass223856220","usedoc")
