@@ -62,17 +62,17 @@ def upload_image_view(request):
 			verificar = DBconnection.vefUser(userRoute,image_send)
 			print(verificar)
 			if verificar:
-				responseUser ={
-					'_id':str(user['_id']),
-					'registerDate':str(user['registerDate']),
-					'name': Cipher.decrypt(user['name']),
-					'lastName':user['lastName'],
-					'email':Cipher.decrypt(user['email']),
-					'userType':user['userType'],
-					'data': user['data'],
-					'imageRoute': user['imageRoute']
-				}
-				return HttpResponse(json.dumps(responseUser))
+				#responseUser ={
+				#	'_id':str(user['_id']),
+				#	'registerDate':str(user['registerDate']),
+				#	'name': Cipher.decrypt(user['name']),
+				#	'lastName':user['lastName'],
+				#	'email':Cipher.decrypt(user['email']),
+				#	'userType':user['userType'],
+				#	'data': user['data'],
+				#	'imageRoute': user['imageRoute']
+				#}
+				return HttpResponse(json.dumps(str(user['_id'])))
 		except: 
 			pass
 	return HttpResponse('No se ha encontrado paciente')
