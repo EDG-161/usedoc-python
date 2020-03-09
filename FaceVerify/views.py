@@ -24,6 +24,7 @@ from base64 import b64decode
 from django.core.files.base import ContentFile
 from FaceVerify.storage import JSONEncoder
 from django.core.files.storage import FileSystemStorage
+from Usedoc import Cipher
 
 def mongo(request):
 	client = MongoClient("mongodb+srv://UseDoc_userDB:UsedocPass_223856220@cluster0-wyexi.mongodb.net/test?retryWrites=true&w=majority")
@@ -64,10 +65,10 @@ def upload_image_view(request):
 			if DBconnection.vefUser(userRoute,image_send):
 				responseUser ={
 					'_id':str(user['_id']),
-					'registerDate':user['registerDate'],
-					'name':user['name'],
+					'registerDate':str(user['registerDate']),
+					'name': Cipher.decrypt(user['name']),
 					'lastName':user['lastName'],
-					'email':user['email'],
+					'email':Cipher.decrypt(user['email']),
 					'userType':user['userType'],
 					'data': user['data'],
 					'imageRoute': user['imageRoute']
