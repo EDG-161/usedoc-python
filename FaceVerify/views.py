@@ -60,7 +60,7 @@ def upload_image_view(request):
 		return HttpResponse('No se ha encontrado paciente')
 	except Exception as e:
 		print(e)
-		message = "Error  " +
+		message = "Error  "
 	return HttpResponse(message) 
 
 def connection(request):
