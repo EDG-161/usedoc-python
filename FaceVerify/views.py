@@ -59,7 +59,9 @@ def upload_image_view(request):
 	for user in users.find({'userType':"Paciente"}):
 		try:
 			userRoute = 'http://api.usedoc.ml/{}'.format(user['imageRoute'])
-			if DBconnection.vefUser(userRoute,image_send):
+			verificar = DBconnection.vefUser(userRoute,image_send)
+			print(verificar)
+			if verificar:
 				responseUser ={
 					'_id':str(user['_id']),
 					'registerDate':str(user['registerDate']),
@@ -69,11 +71,7 @@ def upload_image_view(request):
 					'userType':user['userType'],
 					'data': user['data'],
 					'imageRoute': user['imageRoute']
-				}
-				
-				if os.path.isfile('static/static/images/'+name):
-					os.remove('static/static/images/' + name)
-				return HttpResponse(json.dumps(responseUser))
+				}return HttpResponse(json.dumps(responseUser))
 		except: 
 			pass
 	return HttpResponse('No se ha encontrado paciente')
