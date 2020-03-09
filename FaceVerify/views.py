@@ -50,9 +50,9 @@ def upload_image_view(request):
 			data = ContentFile(b64decode(img_base64), name)
 			newImage = AlbumImage()
 			newImage.image = data
-			if os.path.isfile('static/images/'+name):
-				print('static/images/'+name)
-				os.remove('static/images/' + name)
+			if os.path.isfile('static/static/images/'+name):
+				print('static/static/images/'+name)
+				os.remove('static/static/images/' + name)
 			newImage.album = name
 			newImage.save() 
 			message = "Image uploadedasdasdasdasd succesfully!"
@@ -60,7 +60,7 @@ def upload_image_view(request):
 		for user in users.find({'userType':"Paciente"}):
 			userRoute = 'http://157.245.161.67:3001/{}'.format(user['imageRoute'])
 			if DBconnection.vefUser(userRoute,image_send):
-				return HttpResponse(json.dumps(user))
+				return HttpResponse(user)
 			
 		return HttpResponse('No se ha encontrado paciente')
 	except Exception as e:
