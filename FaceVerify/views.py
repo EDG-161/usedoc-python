@@ -72,6 +72,7 @@ def upload_image_view(request):
 				#	'data': user['data'],
 				#	'imageRoute': user['imageRoute']
 				#}
+				print("Es la misma")
 				return HttpResponse(json.dumps(str(user['_id'])))
 		except: 
 			pass
