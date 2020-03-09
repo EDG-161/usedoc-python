@@ -49,10 +49,7 @@ def upload_image_view(request):
 			#id_usr = request.POST["id_usr"]
 			name = request.POST["img_name"] + ".jpg"
 			if os.path.isfile('static/static/images/'+name):
-				print('static/static/images/'+name)
 				os.remove('static/static/images/' + name)
-
-			print(os.path.isfile('static/static/images/'+name))
 			data = ContentFile(b64decode(img_base64), name)
 			newImage = AlbumImage()
 			newImage.image = data
@@ -73,6 +70,8 @@ def upload_image_view(request):
 					'data': user['data'],
 					'imageRoute': user['imageRoute']
 				}
+				if os.path.isfile('static/static/images/'+name):
+				os.remove('static/static/images/' + name)
 				return HttpResponse(json.dumps(responseUser))
 			
 		return HttpResponse('No se ha encontrado paciente')
