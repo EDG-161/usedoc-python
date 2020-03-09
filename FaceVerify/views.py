@@ -22,7 +22,7 @@ from FaceVerify import DBconnection
 from pymongo import MongoClient
 from base64 import b64decode
 from django.core.files.base import ContentFile
-from FaceVerify.storage import OverwriteStorage
+from FaceVerify.storage import JSONEncoder
 from django.core.files.storage import FileSystemStorage
 
 def mongo(request):
@@ -72,7 +72,7 @@ def upload_image_view(request):
 					'data': user['data'],
 					'imageRoute': user['imageRoute']
 				}
-				return HttpResponse(json.dumps(responseUser))
+				return HttpResponse(JSONEncoder.encode(user))
 			
 		return HttpResponse('No se ha encontrado paciente')
 	except Exception as e:
