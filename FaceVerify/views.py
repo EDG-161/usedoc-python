@@ -54,12 +54,13 @@ def upload_image_view(request):
 			image_send = "https://verify.usedoc.ml/static/images/{}".format(name)
 		for user in users.find({'userType':"Paciente"}):
 			userRoute = 'http://157.245.161.67:3001/{}'.format(user['imageRoute'])
-			if DBconnection.vefUser(userRoute,name):
+			if DBconnection.vefUser(userRoute,image_send):
 				return HttpResponse(json.dumps(user))
 			
 		return HttpResponse('No se ha encontrado paciente')
 	except Exception as e:
-		message = "Error  " + e
+		print(e)
+		message = "Error  " +
 	return HttpResponse(message) 
 
 def connection(request):
