@@ -24,10 +24,13 @@ def vefUser(user,upload):
     face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
     source_image_file_name1 = user
     target_image_file_names = upload
+    print(source_image_file_name1 + "   " + target_image_file_names)
     detected_faces1 = face_client.face.detect_with_url(source_image_file_name1)
+    print(detected_faces1)
     source_image1_id = detected_faces1[0].face_id
     detected_faces_ids = []
     detected_faces = face_client.face.detect_with_url(target_image_file_names)
+    print(detected_faces)
     detected_faces_ids.append(detected_faces[0].face_id)
 
     verify_result_same = face_client.face.verify_face_to_face(source_image1_id, detected_faces_ids[0])
