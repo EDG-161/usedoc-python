@@ -43,7 +43,7 @@ def upload_image_view(request):
 		users = db['users']
 		if request.method == 'POST':
 			img_base64 = request.POST["img"]
-			id_usr = request.POST["id_usr"]
+			#id_usr = request.POST["id_usr"]
 			name = request.POST["img_name"] + ".png"
 			data = ContentFile(b64decode(img_base64), name)
 			newImage = AlbumImage()
@@ -58,7 +58,7 @@ def upload_image_view(request):
 				return HttpResponse(json.dumps(user))
 			
 		return HttpResponse('No se ha encontrado paciente')
-	except e:
+	except Exception as e:
 		message = "Error  " + e
 	return HttpResponse(message) 
 
